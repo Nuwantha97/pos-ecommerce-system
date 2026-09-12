@@ -1,0 +1,94 @@
+.container {
+  padding: 16px 20px;
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 4px 12px 12px 24px;
+  font-size: 13px;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metaLabel {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.metaValue {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: var(--text);
+  word-break: break-all;
+}
+
+.itemsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.itemsTable th {
+  padding: 8px 12px;
+  background-color: var(--gray-light);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.itemsTable td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.itemsTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.productName {
+  font-weight: 500;
+}
+
+.numeric {
+  text-align: right;
+}
+
+.emptyItems {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 16px;
+  font-style: italic;
+}
+
+.totalLabel {
+  text-align: right;
+  font-weight: 600;
+  color: var(--text);
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+}
+
+.totalValue {
+  text-align: right;
+  font-weight: 700;
+  color: var(--accent);
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+}

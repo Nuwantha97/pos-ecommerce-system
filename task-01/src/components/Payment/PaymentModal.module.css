@@ -1,0 +1,187 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background-color: var(--bg-white);
+  border-radius: 12px;
+  padding: 32px;
+  width: 480px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.resultState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.iconCircle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  margin-bottom: 24px;
+}
+
+.iconSuccess {
+  background-color: var(--success-light);
+  color: var(--success);
+}
+
+.iconError {
+  background-color: var(--danger-light);
+  color: var(--danger);
+}
+
+.resultState h2 {
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.resultState p {
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.btnOutline {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius);
+  height: 44px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.btnAccent {
+  flex: 1;
+  background-color: var(--accent);
+  border: none;
+  color: var(--bg-white);
+  border-radius: var(--radius);
+  height: 44px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.defaultState {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.header h2 {
+  margin: 0;
+}
+
+.timer {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: monospace;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.timerAmber {
+  color: var(--warning);
+}
+
+.timerRed {
+  color: var(--danger);
+}
+
+.orderSummary {
+  background-color: var(--gray-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.itemList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+}
+
+.itemList li {
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.total {
+  font-weight: bold;
+  font-size: 18px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.controlsSection {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+
+.controlLabel {
+  font-weight: 600;
+  margin-bottom: 12px;
+  margin-top: 0;
+}
+
+.simulationButtons {
+  display: flex;
+  gap: 12px;
+}
+
+.simulationButtons button {
+  height: 44px;
+  flex: 1;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.simulationButtons button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.successBtn {
+  background-color: #16a34a;
+  color: white;
+}
+
+.failBtn {
+  background-color: #dc2626;
+  color: white;
+}
+
+.timeoutBtn {
+  background-color: #6b7280;
+  color: white;
+}
