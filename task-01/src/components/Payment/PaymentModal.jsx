@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './PaymentModal.module.css';
 import { usePayment } from '../../hooks/usePayment';
 import { useCart } from '../../context/CartContext';
