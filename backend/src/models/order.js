@@ -6,6 +6,10 @@ class Order extends Model {}
 Order.init({
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   cart_id: { type: DataTypes.STRING, allowNull: false },
+  customerId: {
+  type: DataTypes.STRING,
+  allowNull: true,
+  field: 'customer_id',},
   status: {
     type: DataTypes.ENUM('pending', 'reserved', 'paid', 'failed', 'expired', 'cancelled', 'refunded'),
     allowNull: false,

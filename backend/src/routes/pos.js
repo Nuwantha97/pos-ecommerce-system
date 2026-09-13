@@ -13,4 +13,8 @@ router.post('/products', productController.createProduct);
 router.post('/checkout', orderController.checkout);
 router.post('/payments', paymentController.processPayment);
 
+router.patch('/orders/:id/cancel', orderController.cancelOrder);
+router.get('/orders/:id', orderController.getOrderById);
+router.get('/orders', orderController.getAllOrders);
+
 export default router;

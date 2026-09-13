@@ -2,6 +2,8 @@ import sequelize from '../database/database.js';
 import { Product, Order, OrderItem, Reservation } from '../models/index.js';
 import InsufficientStockError from '../errors/InsufficientStockError.js';
 import DuplicateSubmissionError from '../errors/DuplicateSubmissionError.js';
+import { Order, OrderItem, Product, Reservation } from '../models/index.js';
+import { assertTransition, ORDER_STATUSES } from './orderStateMachine.js';
 
 const RESERVATION_TTL_MS = 5 * 60 * 1000;
 
@@ -71,5 +73,54 @@ export async function checkout({ cartId, items, idempotencyKey }) {
     }
 
     return { orderId: order.id, expiresAt };
+  });
+}
+
+export async function getAllOrders() {
+  return Order.findAll({
+    include: [{ model: OrderItem }],
+    order: [['created_at', 'DESC']]
+  });
+}
+
+export async function getOrderById(id) {
+  const order = await Order.findByPk(id, {
+    include: [{ model: OrderItem }]
+  });
+  if (!order) {
+    const err = new Error('Order not found');
+    err.status = 404;
+    throw err;
+  }
+  return order;
+}
+
+export async function cancelOrder(id) {
+  return sequelize.transaction(async (t) => {
+    const order = await Order.findByPk(id, { lock: t.LOCK.UPDATE, transaction: t });
+    if (!order) {
+      const err = new Error('Order not found');
+      err.status = 404;
+      throw err;
+    }
+
+    assertTransition(order.status, ORDER_STATUSES.CANCELLED);
+
+    const reservations = await Reservation.findAll({
+      where: { order_id: id, status: 'reserved' },
+      lock: t.LOCK.UPDATE,
+      transaction: t
+    });
+
+    for (const r of reservations) {
+      await Product.increment('stock', { by: r.quantity, where: { id: r.product_id }, transaction: t });
+      r.status = 'released';
+      await r.save({ transaction: t });
+    }
+
+    order.status = ORDER_STATUSES.CANCELLED;
+    await order.save({ transaction: t });
+
+    return order;
   });
 }
