@@ -24,3 +24,24 @@ export async function getAllProducts(req, res, next) {
     next(err);
   }
 }
+
+export async function updateProduct(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { name, price, stock, category, image_url } = req.body;
+    const product = await productService.updateProduct(id, { name, price, stock, category, image_url });
+    res.json(product);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function deleteProduct(req, res, next) {
+  try {
+    const { id } = req.params;
+    await productService.deleteProduct(id);
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+}
