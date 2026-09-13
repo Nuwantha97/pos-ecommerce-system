@@ -5,7 +5,7 @@ import * as paymentController from '../controllers/paymentController.js';
 
 const router = Router();
 
-router.get('/products/:category?', productController.getAllProducts);
+router.get('/products', productController.getAllProducts);
 router.put('/products/:id', productController.updateProduct);
 router.delete('/products/:id', productController.deleteProduct);
 router.post('/products', productController.createProduct);

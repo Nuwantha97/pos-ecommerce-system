@@ -1,4 +1,3 @@
-// backend/src/scripts/init-db.js
 import sequelize from '../database/database.js';
 import '../models/index.js';
 

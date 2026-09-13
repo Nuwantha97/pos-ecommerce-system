@@ -2,7 +2,6 @@ import sequelize from '../database/database.js';
 import { Product, Order, OrderItem, Reservation } from '../models/index.js';
 import InsufficientStockError from '../errors/InsufficientStockError.js';
 import DuplicateSubmissionError from '../errors/DuplicateSubmissionError.js';
-import { Order, OrderItem, Product, Reservation } from '../models/index.js';
 import { assertTransition, ORDER_STATUSES } from './orderStateMachine.js';
 
 const RESERVATION_TTL_MS = 5 * 60 * 1000;

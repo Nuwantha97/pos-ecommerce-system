@@ -1,4 +1,3 @@
-// backend/src/scripts/seed.js
 import sequelize from '../database/database.js';
 import { Product } from '../models/index.js';
 
