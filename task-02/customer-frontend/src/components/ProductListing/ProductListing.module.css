@@ -1,0 +1,148 @@
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.listing {
+  padding: 0;
+}
+
+.title {
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+
+/* ── Search ── */
+.searchBar {
+  margin-bottom: 20px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.15s;
+  background: var(--bg-white);
+}
+
+.searchInput:focus {
+  border-color: var(--accent);
+}
+
+/* ── Filters ── */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.categoryTabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.categoryTab {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.categoryTab:hover {
+  border-color: var(--text-secondary);
+}
+
+.activeTab {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.priceRange {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.priceLabel {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.priceInput {
+  width: 90px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  outline: none;
+  background: var(--bg-white);
+}
+
+.priceInput:focus {
+  border-color: var(--accent);
+}
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* ── States ── */
+.loading,
+.empty,
+.error {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+.retryBtn {
+  padding: 8px 24px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+.retryBtn:hover {
+  background: var(--accent-hover);
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .priceRange {
+    flex-wrap: wrap;
+  }
+}

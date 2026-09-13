@@ -1,0 +1,72 @@
+.container {
+  padding: 16px;
+}
+
+.metaRow {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metaLabel {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.metaValue {
+  font-size: 13px;
+}
+
+/* ── Items Table ── */
+.itemsTable {
+  width: 100%;
+}
+
+.itemsTable th {
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.itemsTable td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.numeric {
+  text-align: right;
+}
+
+.productName {
+  font-weight: 500;
+}
+
+.emptyItems {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 16px;
+}
+
+.totalLabel {
+  text-align: right;
+  font-weight: 600;
+  padding: 8px 12px;
+}
+
+.totalValue {
+  text-align: right;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 8px 12px;
+}
