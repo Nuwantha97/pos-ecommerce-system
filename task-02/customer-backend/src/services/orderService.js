@@ -2,7 +2,7 @@ import sequelize from '../database/database.js';
 import { Product, Order, OrderItem, Reservation } from '../models/index.js';
 import { assertTransition, ORDER_STATUSES } from './orderStateMachine.js';
 import { releaseReservationsForOrder } from './reservationService.js';
-import InsufficientStockError from '../errors/InsufficientStockError.js';
+import InsufficientStockError from '../middleware/errorHandler.js';
 
 export async function checkout({ cartId, items, customerId, idempotencyKey }) {
   const existing = await Order.findOne({ where: { idempotency_key: idempotencyKey } });
