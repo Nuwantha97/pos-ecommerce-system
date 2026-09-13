@@ -4,8 +4,8 @@ import ProductCard from './ProductCard';
 import styles from './Catalog.module.css';
 
 export default function Catalog() {
-  const { products, loading, error, refetch } = useProducts();
   const [activeCategory, setActiveCategory] = useState('All');
+  const { products, loading, error, refetch } = useProducts(activeCategory);
 
   // Extract unique categories from products: 'All' always first, followed by sorted categories
   const categories = useMemo(() => {

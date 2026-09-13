@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize(process.env.POSTGRES_URL_NON_POOLING, {
+const sequelize = new Sequelize(process.env.POSTGRES_URL, {
   dialect: 'postgres',
   dialectOptions: {
     ssl: {
@@ -8,6 +8,7 @@ const sequelize = new Sequelize(process.env.POSTGRES_URL_NON_POOLING, {
       rejectUnauthorized: false, // Neon uses self-signed-style certs in the chain; this is expected, not a security downgrade for this use case
     },
   },
+  pool: { max: 5, min: 0, idle: 10000 },
   logging: false,
 });
 

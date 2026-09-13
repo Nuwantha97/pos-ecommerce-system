@@ -12,7 +12,7 @@ export default function Products() {
     createProduct,
     updateProduct,
     deleteProduct,
-  } = useProducts();
+  } = useProducts("All");
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
