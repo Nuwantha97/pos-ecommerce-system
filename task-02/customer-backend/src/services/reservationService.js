@@ -1,3 +1,5 @@
+import { Product, Reservation } from '../models/index.js';
+
 export async function releaseReservationsForOrder(orderId, t) {
   const reservations = await Reservation.findAll({
     where: { order_id: orderId, status: 'reserved' },
