@@ -49,7 +49,7 @@ export default function ProductCard({ product }) {
         </h3>
         <div className={styles.meta}>
           <span className={styles.price}>
-            ${parseFloat(product.price || 0).toFixed(2)}
+            Rs.{parseFloat(product.price || 0).toFixed(2)}
           </span>
           <span className={styles.stock}>
             {product.stock ?? 0} in stock

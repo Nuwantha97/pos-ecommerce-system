@@ -154,7 +154,7 @@ export default function OrderHistory() {
                       <td className={styles.orderId}>#{order.id}</td>
                       <td>{itemsCount}</td>
                       <td className={styles.total}>
-                        ${parseFloat(order.total || 0).toFixed(2)}
+                        Rs.{parseFloat(order.total || 0).toFixed(2)}
                       </td>
                       <td>
                         <StatusBadge status={order.status} />

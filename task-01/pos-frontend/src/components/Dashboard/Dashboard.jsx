@@ -80,7 +80,7 @@ export default function Dashboard() {
                     <td className={styles.nameCell}>{product.name}</td>
                     <td className={styles.categoryCell}>{product.category || '—'}</td>
                     <td className={styles.priceCell}>
-                      ${parseFloat(product.price || 0).toFixed(2)}
+                      Rs.{parseFloat(product.price || 0).toFixed(2)}
                     </td>
                     <td className={styles.stockCell}>{product.stock ?? 0}</td>
                     <td className={styles.actionsCell}>

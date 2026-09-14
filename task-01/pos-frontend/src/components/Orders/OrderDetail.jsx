@@ -48,8 +48,8 @@ export default function OrderDetail({ order }) {
                     {item.Product?.name || 'Product #' + item.product_id}
                   </td>
                   <td className={styles.numeric}>{item.quantity}</td>
-                  <td className={styles.numeric}>${unitPrice}</td>
-                  <td className={styles.numeric}>${subtotal}</td>
+                  <td className={styles.numeric}>Rs.{unitPrice}</td>
+                  <td className={styles.numeric}>Rs.{subtotal}</td>
                 </tr>
               );
             })
@@ -62,7 +62,7 @@ export default function OrderDetail({ order }) {
                 Total
               </td>
               <td className={styles.totalValue}>
-                ${parseFloat(order.total || 0).toFixed(2)}
+                Rs.{parseFloat(order.total || 0).toFixed(2)}
               </td>
             </tr>
           </tfoot>

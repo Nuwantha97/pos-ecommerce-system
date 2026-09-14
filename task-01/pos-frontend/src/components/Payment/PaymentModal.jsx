@@ -105,7 +105,7 @@ export default function PaymentModal({ orderId, expiresAt, items, total, onClose
               <li key={idx}>{item.quantity}x {item.name}</li>
             ))}
           </ul>
-          <div className={styles.total}>Total: ${total}</div>
+          <div className={styles.total}>Total: Rs.{total}</div>
         </div>
 
         <div className={styles.controlsSection}>

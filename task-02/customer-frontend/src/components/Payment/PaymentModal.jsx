@@ -114,7 +114,7 @@ export default function PaymentModal({ orderId, expiresAt, items, total, idempot
               <li key={idx}>{item.quantity}x {item.name}</li>
             ))}
           </ul>
-          <div className={styles.total}>Total: ${typeof total === 'number' ? total.toFixed(2) : total}</div>
+          <div className={styles.total}>Total: Rs.{typeof total === 'number' ? total.toFixed(2) : total}</div>
         </div>
 
         <div className={styles.controlsSection}>

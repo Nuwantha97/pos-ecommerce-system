@@ -125,7 +125,7 @@ export default function ProductForm({ isOpen, onClose, onSubmit, initialData }) 
             </label>
 
             <label className={styles.field}>
-              <span className={styles.labelText}>Price ($)</span>
+              <span className={styles.labelText}>Price (Rs.)</span>
               <input
                 type="number"
                 step="0.01"

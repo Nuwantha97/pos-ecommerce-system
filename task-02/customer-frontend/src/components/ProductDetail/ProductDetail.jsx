@@ -98,7 +98,7 @@ export default function ProductDetail() {
           )}
 
           <div className={styles.price}>
-            ${parseFloat(product.price || 0).toFixed(2)}
+            Rs.{parseFloat(product.price || 0).toFixed(2)}
           </div>
 
           <div className={styles.stockInfo}>

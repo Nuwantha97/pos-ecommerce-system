@@ -60,7 +60,7 @@ export default function CartPanel({ isOpen, onClose }) {
                 <div key={item.productId} className={styles.itemRow}>
                   <div className={styles.itemInfo}>
                     <div className={styles.itemName}>{item.name}</div>
-                    <div className={styles.itemPrice}>${parseFloat(item.price).toFixed(2)}</div>
+                    <div className={styles.itemPrice}>Rs.{parseFloat(item.price).toFixed(2)}</div>
                   </div>
                   <div className={styles.itemActions}>
                     <QuantityStepper
@@ -85,7 +85,7 @@ export default function CartPanel({ isOpen, onClose }) {
           {checkoutError && <div className={styles.errorBox}>{checkoutError}</div>}
           <div className={styles.totalLine}>
             <span>Total</span>
-            <span>${total.toFixed(2)}</span>
+            <span>Rs.{total.toFixed(2)}</span>
           </div>
           <div className={styles.footerButtons}>
             <button className={styles.cancelBtn} onClick={handleCancel}>Cancel</button>
