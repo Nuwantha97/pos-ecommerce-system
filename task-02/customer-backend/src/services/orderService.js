@@ -31,7 +31,7 @@ export async function checkout({ cartId, items, customerId, idempotencyKey }) {
 
     const order = await Order.create({
       cart_id: cartId,
-      customer_id: customerId ?? null,
+      customerId: customerId ?? null,
       status: ORDER_STATUSES.RESERVED,
       idempotency_key: idempotencyKey,
       expires_at: expiresAt,
@@ -66,7 +66,7 @@ export async function checkout({ cartId, items, customerId, idempotencyKey }) {
 
 export async function getOrdersByCustomer(customerId) {
   return Order.findAll({
-    where: { customer_id: customerId },
+    where: { customerId: customerId },
     include: [{ model: OrderItem }],
     order: [['created_at', 'DESC']]
   });

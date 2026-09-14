@@ -9,7 +9,7 @@ Order.init({
   customerId: {
   type: DataTypes.STRING,
   allowNull: true,
-  field: 'customer_id',},
+  },
   status: {
     type: DataTypes.ENUM('pending', 'reserved', 'paid', 'failed', 'expired', 'cancelled', 'refunded'),
     allowNull: false,

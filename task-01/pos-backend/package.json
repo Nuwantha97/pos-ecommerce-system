@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node --watch --env-file=.env.local src/server.js",
-    "start": "node --env-file=.env src/server.js"
+    "start": "node --env-file=.env src/server.js",
+    "db:init": "node --env-file=.env.local src/scripts/init-db.js",
+    "db:seed": "node --env-file=.env.local src/scripts/seed.js"
   },
   "keywords": [],
   "author": "",
