@@ -13,7 +13,7 @@ function resolveOutcome(forceOutcome) {
 }
 
 export async function processPayment({ orderId, idempotencyKey, forceOutcome }) {
-  // idempotency check first — return cached result, never double-process
+  // idempotency check first - return cached result not double process
   const existingPayment = await Payment.findOne({ where: { idempotency_key: idempotencyKey } });
   if (existingPayment) {
     return { orderId, status: existingPayment.status, duplicate: true };

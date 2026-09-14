@@ -7,6 +7,11 @@ Reservation.init({
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   product_id: { type: DataTypes.INTEGER, allowNull: false },
   cart_id: { type: DataTypes.STRING, allowNull: false },
+  order_id: {
+  type: DataTypes.INTEGER,
+  allowNull: true,
+  references: { model: 'orders', key: 'id' }
+  },
   quantity: { type: DataTypes.INTEGER, allowNull: false, validate: { min: 1 } },
   status: {
     type: DataTypes.ENUM('reserved', 'expired', 'released', 'consumed'),
