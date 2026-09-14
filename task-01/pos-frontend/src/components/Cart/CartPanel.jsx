@@ -25,9 +25,10 @@ export default function CartPanel({ isOpen, onClose }) {
           orderId: result.orderId,
           expiresAt: result.expiresAt,
           items: [...items],
-          total
+          total,
+          idempotencyKey
         });
-        clearCart();
+        //clearCart();
         onClose();
       }
     } catch (error) {
@@ -104,6 +105,7 @@ export default function CartPanel({ isOpen, onClose }) {
           expiresAt={paymentData.expiresAt}
           items={paymentData.items}
           total={paymentData.total}
+          idempotencyKey={paymentData.idempotencyKey}
           onClose={() => setPaymentData(null)} 
         />
       )}

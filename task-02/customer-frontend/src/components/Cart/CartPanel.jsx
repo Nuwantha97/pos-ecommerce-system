@@ -29,7 +29,7 @@ export default function CartPanel({ isOpen, onClose }) {
           total,
           idempotencyKey,
         });
-        clearCart();
+        //clearCart();
         onClose();
       }
     } catch {

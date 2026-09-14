@@ -10,6 +10,7 @@ export function usePayment() {
     setLoading(true);
     setError(null);
     try {
+      console.log('Submitting payment with:', { orderId, idempotencyKey, forceOutcome });
       const data = await post('/api/shop/payments', { orderId, idempotencyKey, forceOutcome });
       setResult(data);
       return data;

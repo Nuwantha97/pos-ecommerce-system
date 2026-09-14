@@ -73,7 +73,15 @@ export async function getOrdersByCustomer(customerId) {
 }
 
 export async function getOrderById(id) {
-  const order = await Order.findByPk(id, { include: [{ model: OrderItem }] });
+  const order = await Order.findByPk(id, {
+    include: [{
+      model: OrderItem,
+      include: [{
+        model: Product,
+        attributes: ['id', 'name']
+      }]
+    }]
+  });
   if (!order) {
     const err = new Error('Order not found');
     err.status = 404;

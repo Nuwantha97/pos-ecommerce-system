@@ -5,8 +5,8 @@ import { usePayment } from '../../hooks/usePayment';
 import { useCart } from '../../context/CartContext';
 
 export default function PaymentModal({ orderId, expiresAt, items, total, idempotencyKey, onClose }) {
-  const { submitPayment, loading, error, reset } = usePayment();
-  const { triggerRefresh } = useCart();
+  const { submitPayment, loading, error } = usePayment();
+  const { triggerRefresh, clearCart } = useCart();
   const navigate = useNavigate();
   const [status, setStatus] = useState('idle'); // 'idle', 'success', 'failed', 'expired'
   const [selectedOutcome, setSelectedOutcome] = useState('success');
@@ -32,12 +32,14 @@ export default function PaymentModal({ orderId, expiresAt, items, total, idempot
     try {
       await submitPayment({ orderId, idempotencyKey, forceOutcome: selectedOutcome });
       if (selectedOutcome === 'success') {
+        clearCart();
         setStatus('success');
         triggerRefresh();
       } else if (selectedOutcome === 'failure') {
         setStatus('failed');
         triggerRefresh();
       } else if (selectedOutcome === 'timeout') {
+        clearCart();
         setStatus('expired');
         triggerRefresh();
       }
@@ -47,8 +49,7 @@ export default function PaymentModal({ orderId, expiresAt, items, total, idempot
   };
 
   const handleRetry = () => {
-    setStatus('idle');
-    reset();
+    onClose();
   };
 
   const handleViewOrders = () => {
@@ -79,7 +80,12 @@ export default function PaymentModal({ orderId, expiresAt, items, total, idempot
           <div className={`${styles.iconCircle} ${styles.iconError}`}>✕</div>
           <h2>Reservation Expired</h2>
           <p>The stock reservation has been released. Please return to your cart and try again.</p>
-          <button className={styles.btnOutline} onClick={onClose}>Start Over</button>
+          <button className={styles.btnOutline} onClick={() => {
+            onClose();
+            clearCart();
+          }}>
+            Start Over
+          </button>
         </div>
       );
     }
