@@ -23,9 +23,9 @@ export default function ProductCard({ product }) {
   return (
     <Link to={`/products/${product.id}`} className={styles.card}>
       <div className={styles.imageArea}>
-        {product.imageUrl ? (
+        {product.image_url ? (
           <img
-            src={product.imageUrl}
+            src={product.image_url}
             alt={product.name}
             className={styles.image}
             loading="lazy"

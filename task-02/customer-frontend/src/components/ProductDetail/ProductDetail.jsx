@@ -83,8 +83,8 @@ export default function ProductDetail() {
 
       <div className={styles.content}>
         <div className={styles.imageArea}>
-          {product.imageUrl ? (
-            <img src={product.imageUrl} alt={product.name} className={styles.image} />
+          {product.image_url ? (
+            <img src={product.image_url} alt={product.name} className={styles.image} />
           ) : (
             <div className={styles.placeholder}>{initialLetter}</div>
           )}
