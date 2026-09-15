@@ -94,9 +94,6 @@ export async function getOrderById(id) {
 }
 
 export async function cancelOrder(id) {
-  // Lazy expiry: if past TTL, expire before attempting cancel
-  await expireSingleOrder(id);
-
   return sequelize.transaction(async (t) => {
     const order = await Order.findByPk(id, { lock: t.LOCK.UPDATE, transaction: t });
     if (!order) {
@@ -121,6 +118,7 @@ export async function refundOrder(id) {
       throw err;
     }
     assertTransition(order.status, ORDER_STATUSES.REFUNDED);
+    await releaseReservationsForOrder(id, t, 'consumed', 'released');
     order.status = ORDER_STATUSES.REFUNDED;
     await order.save({ transaction: t });
     return order;

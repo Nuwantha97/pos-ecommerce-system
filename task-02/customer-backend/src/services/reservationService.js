@@ -3,15 +3,15 @@ import sequelize from '../database/database.js';
 import { Product, Order, Reservation } from '../models/index.js';
 import { assertTransition, ORDER_STATUSES } from './orderStateMachine.js';
 
-export async function releaseReservationsForOrder(orderId, t) {
+export async function releaseReservationsForOrder(orderId, t, fromStatus = 'reserved', toStatus = 'released') {
   const reservations = await Reservation.findAll({
-    where: { order_id: orderId, status: 'reserved' },
+    where: { order_id: orderId, status: fromStatus },
     lock: t.LOCK.UPDATE,
     transaction: t
   });
   for (const r of reservations) {
     await Product.increment('stock', { by: r.quantity, where: { id: r.product_id }, transaction: t });
-    r.status = 'released';
+    r.status = toStatus;
     await r.save({ transaction: t });
   }
 }
