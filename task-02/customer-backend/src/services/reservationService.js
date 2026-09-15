@@ -1,4 +1,7 @@
-import { Product, Reservation } from '../models/index.js';
+import { Op } from 'sequelize';
+import sequelize from '../database/database.js';
+import { Product, Order, Reservation } from '../models/index.js';
+import { assertTransition, ORDER_STATUSES } from './orderStateMachine.js';
 
 export async function releaseReservationsForOrder(orderId, t) {
   const reservations = await Reservation.findAll({
@@ -10,5 +13,57 @@ export async function releaseReservationsForOrder(orderId, t) {
     await Product.increment('stock', { by: r.quantity, where: { id: r.product_id }, transaction: t });
     r.status = 'released';
     await r.save({ transaction: t });
+  }
+}
+
+/**
+ * Expire a single order if it is still in 'reserved' status past its TTL.
+ * Uses SELECT … FOR UPDATE + re-check to prevent races with concurrent
+ * payment, cancellation, or another sweep/lazy-check.
+ * Returns silently if the order doesn't exist, was already transitioned,
+ * or hasn't expired yet — never throws for expected race conditions.
+ */
+export async function expireSingleOrder(orderId) {
+  await sequelize.transaction(async (t) => {
+    const order = await Order.findByPk(orderId, {
+      lock: t.LOCK.UPDATE,
+      transaction: t
+    });
+
+    // Order gone or already transitioned away from 'reserved' — nothing to do
+    if (!order || order.status !== ORDER_STATUSES.RESERVED) return;
+
+    // Not yet expired — nothing to do
+    if (order.expires_at >= new Date()) return;
+
+    assertTransition(order.status, ORDER_STATUSES.EXPIRED);
+    order.status = ORDER_STATUSES.EXPIRED;
+    await order.save({ transaction: t });
+
+    await releaseReservationsForOrder(orderId, t);
+  });
+}
+
+/**
+ * Sweep all orders that are past their reservation TTL.
+ * Each order is processed in its own transaction so one failure
+ * doesn't block the rest.
+ */
+export async function expireStaleReservations() {
+  const staleOrders = await Order.findAll({
+    where: {
+      status: ORDER_STATUSES.RESERVED,
+      expires_at: { [Op.lt]: new Date() }
+    },
+    attributes: ['id']
+  });
+
+  for (const { id } of staleOrders) {
+    try {
+      await expireSingleOrder(id);
+    } catch (err) {
+      // Log and continue — don't let one order block the sweep
+      console.error(`Failed to expire order ${id}:`, err);
+    }
   }
 }

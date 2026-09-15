@@ -1,6 +1,7 @@
 import sequelize from '../database/database.js';
 import { Order, Reservation, Payment, Product } from '../models/index.js';
 import { canTransition } from './orderStateMachine.js';
+import { expireSingleOrder } from './reservationService.js';
 
 function resolveOutcome(forceOutcome) {
   if (forceOutcome && ['success', 'failure', 'timeout'].includes(forceOutcome)) {
@@ -13,6 +14,9 @@ function resolveOutcome(forceOutcome) {
 }
 
 export async function processPayment({ orderId, idempotencyKey, forceOutcome }) {
+  // Lazy expiry: if past TTL, expire before processing payment
+  await expireSingleOrder(orderId);
+
   // idempotency check first — return cached result, never double-process
   const existingPayment = await Payment.findOne({ where: { idempotency_key: idempotencyKey } });
   if (existingPayment) {

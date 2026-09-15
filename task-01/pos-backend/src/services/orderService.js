@@ -3,6 +3,7 @@ import { Product, Order, OrderItem, Reservation } from '../models/index.js';
 import InsufficientStockError from '../errors/InsufficientStockError.js';
 import DuplicateSubmissionError from '../errors/DuplicateSubmissionError.js';
 import { assertTransition, ORDER_STATUSES } from './orderStateMachine.js';
+import { expireSingleOrder, releaseReservationsForOrder } from './reservationService.js';
 
 const RESERVATION_TTL_MS = 5 * 60 * 1000;
 
@@ -83,6 +84,9 @@ export async function getAllOrders() {
 }
 
 export async function getOrderById(id) {
+  // Lazy expiry: ensure stale reservation is expired before returning
+  await expireSingleOrder(id);
+
   const order = await Order.findByPk(id, {
     include: [{
       model: OrderItem,
@@ -101,6 +105,9 @@ export async function getOrderById(id) {
 }
 
 export async function cancelOrder(id) {
+  // Lazy expiry: if past TTL, expire before attempting cancel
+  await expireSingleOrder(id);
+
   return sequelize.transaction(async (t) => {
     const order = await Order.findByPk(id, { lock: t.LOCK.UPDATE, transaction: t });
     if (!order) {
