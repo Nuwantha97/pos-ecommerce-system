@@ -1,4 +1,4 @@
-name: Build and deploy Node.js app to Azure Web App - pos-backend
+name: POS Order & Inventory System - backend
 
 on:
   push:
@@ -62,4 +62,3 @@ jobs:
           app-name: 'pos-backend'
           slot-name: 'Production'
           package: .
-          
