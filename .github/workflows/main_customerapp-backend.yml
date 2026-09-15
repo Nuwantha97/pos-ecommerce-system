@@ -1,18 +1,19 @@
-name: E-Commerce Checkout & Payment System - backend
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy Node.js app to Azure Web App - customerapp-backend
 
 on:
   push:
     branches:
       - main
-    paths:
-      - 'task-02/customer-backend/**'
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: read #This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +24,6 @@ jobs:
           node-version: '24.x'
 
       - name: npm install, build, and test
-        working-directory: ./task-02/customer-backend
         run: |
           npm install
           npm run build --if-present
@@ -33,27 +33,27 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: task-02/customer-backend
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
     permissions:
-      id-token: write
-      contents: read
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: node-app
-
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_CB218E2817CF4183B16A918067492F72 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_CF7934A2AAC847D9AC80B5DC2D3C093C }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C7D50514CD3144C29122F9C39E4E88C5 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_DF1F76D631D74D2DA41502C552608A92 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_39565B627B524265B7B17FEC6B95FDA7 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C301A2C269094F249AFB5AE39E091112 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
