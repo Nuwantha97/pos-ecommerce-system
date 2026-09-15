@@ -17,6 +17,7 @@ Order.init({
   },
   total: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
   idempotency_key: { type: DataTypes.STRING, allowNull: false, unique: true },
+  expires_at: { type: DataTypes.DATE, allowNull: true },
 }, {
   sequelize,
   modelName: 'Order',
