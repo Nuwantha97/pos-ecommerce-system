@@ -16,13 +16,6 @@ export async function releaseReservationsForOrder(orderId, t) {
   }
 }
 
-/**
- * Expire a single order if it is still in 'reserved' status past its TTL.
- * Uses SELECT … FOR UPDATE + re-check to prevent races with concurrent
- * payment, cancellation, or another sweep/lazy-check.
- * Returns silently if the order doesn't exist, was already transitioned,
- * or hasn't expired yet — never throws for expected race conditions.
- */
 export async function expireSingleOrder(orderId) {
   await sequelize.transaction(async (t) => {
     const order = await Order.findByPk(orderId, {
@@ -30,10 +23,10 @@ export async function expireSingleOrder(orderId) {
       transaction: t
     });
 
-    // Order gone or already transitioned away from 'reserved' — nothing to do
+    // Order gone or already transitioned away from 'reserved'
     if (!order || order.status !== ORDER_STATUSES.RESERVED) return;
 
-    // Not yet expired — nothing to do
+    // Not yet expired
     if (order.expires_at >= new Date()) return;
 
     assertTransition(order.status, ORDER_STATUSES.EXPIRED);
@@ -44,11 +37,6 @@ export async function expireSingleOrder(orderId) {
   });
 }
 
-/**
- * Sweep all orders that are past their reservation TTL.
- * Each order is processed in its own transaction so one failure
- * doesn't block the rest.
- */
 export async function expireStaleReservations() {
   const staleOrders = await Order.findAll({
     where: {
