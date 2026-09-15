@@ -152,6 +152,14 @@ export default function PaymentModal({ orderId, expiresAt, items, total, idempot
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
+        <button
+          type="button"
+          className={styles.closeX}
+          onClick={onClose}
+          aria-label="Close"
+        >
+          ✕
+        </button>
         {renderContent()}
       </div>
     </div>

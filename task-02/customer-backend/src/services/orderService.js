@@ -1,7 +1,7 @@
 import sequelize from '../database/database.js';
 import { Product, Order, OrderItem, Reservation } from '../models/index.js';
 import { assertTransition, ORDER_STATUSES } from './orderStateMachine.js';
-import { releaseReservationsForOrder } from './reservationService.js';
+import { releaseReservationsForOrder, expireSingleOrder } from './reservationService.js';
 import InsufficientStockError from '../middleware/errorHandler.js';
 
 export async function checkout({ cartId, items, customerId, idempotencyKey }) {
@@ -73,6 +73,9 @@ export async function getOrdersByCustomer(customerId) {
 }
 
 export async function getOrderById(id) {
+  // Lazy expiry: ensure stale reservation is expired before returning
+  await expireSingleOrder(id);
+
   const order = await Order.findByPk(id, {
     include: [{
       model: OrderItem,
@@ -115,6 +118,7 @@ export async function refundOrder(id) {
       throw err;
     }
     assertTransition(order.status, ORDER_STATUSES.REFUNDED);
+    await releaseReservationsForOrder(id, t, 'consumed', 'released');
     order.status = ORDER_STATUSES.REFUNDED;
     await order.save({ transaction: t });
     return order;

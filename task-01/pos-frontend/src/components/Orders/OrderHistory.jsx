@@ -5,7 +5,7 @@ import StatusBadge from '../../shared/StatusBadge';
 import OrderDetail from './OrderDetail';
 import styles from './OrderHistory.module.css';
 
-const CANCELABLE_STATUSES = ['pending', 'reserved', 'paid'];
+const CANCELABLE_STATUSES = ['pending', 'reserved'];
 
 export default function OrderHistory() {
   const { orders, loading, error, refetch, getOrder, cancelOrder } = useOrders();
